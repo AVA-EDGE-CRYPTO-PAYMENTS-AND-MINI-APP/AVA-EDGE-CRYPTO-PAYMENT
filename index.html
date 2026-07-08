@@ -660,8 +660,6 @@ display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:13px;
   position:sticky;
   top:0;
   z-index:50;
-}
-
   border-radius:0 0 18px 18px;
 }
 
@@ -1730,15 +1728,16 @@ document.getElementById("sheet").classList.remove("open");
 document.getElementById("overlay").classList.remove("show");
 }
 
-document.getElementById("langBtn").onclick=()=>{
+const langButton=document.getElementById("langBtn");
+
+if(langButton){
+langButton.onclick=()=>{
 lang = lang==="ru" ? "en" : "ru";
 applyLang();
 };
+}
 
-document.querySelectorAll(".tab").forEach(tab=>{
-tab.onclick = () => {
-
-  document.querySelectorAll(".bottomItem").forEach(tab=>{
+document.querySelectorAll(".bottomItem").forEach(tab=>{
 
 tab.onclick = () => {
 
@@ -1754,7 +1753,7 @@ currentTab = tab.dataset.tab;
 
 document.getElementById("search").value="";
 
-scrollContainer.scrollTop=0;
+scrollContainer.scrollTop = 0;
 
 render();
 
@@ -1785,7 +1784,11 @@ function checkBlock() {
     document.getElementById("iosBlock").style.display = "flex";
 
     document.querySelector(".top").style.display = "none";
-    document.querySelector(".container").style.display = "none";
+    const cont=document.querySelector(".container");
+
+if(cont){
+cont.style.display="none";
+}
 
     const overlay = document.querySelector(".ps5Overlay");
     if (overlay) overlay.style.display = "none";
