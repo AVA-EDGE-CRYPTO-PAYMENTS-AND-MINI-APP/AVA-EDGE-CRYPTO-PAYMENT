@@ -55,94 +55,31 @@ gap:10px;
 }
 .joystick{position:absolute;right:8px;top:-17px;font-size:44px;cursor:pointer;transform:rotate(-25deg);}
 
-.row{
-    width:100%;
-    max-width:1100px;
-
-    display:flex;
-    align-items:center;
-    gap:8px;
-
-    padding:8px;
-
-    border-radius:24px;
-
-    background:rgba(255,255,255,.75);
-
-    backdrop-filter:blur(18px);
-    -webkit-backdrop-filter:blur(18px);
-
-    border:1px solid rgba(0,0,0,.08);
-
-    box-shadow:
-    0 10px 30px rgba(0,0,0,.12),
-    inset 0 1px 0 rgba(255,255,255,.9);
-}
-
-
-.tab{
-    flex:1;
-
-    height:48px;
-
-    border-radius:18px;
-
-    background:transparent;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    font-weight:900;
-
-    cursor:pointer;
-
-    color:#555;
-
-    transition:.25s;
-}
-
-
-.tab.active{
-
-    background:#fff;
-
-    color:#007aff;
-
-    box-shadow:
-    0 8px 20px rgba(0,0,0,.12);
-
-    transform:scale(1.03);
-}
-
-
+.row{width:100%;max-width:1100px;display:flex;gap:10px;}
 
 .langBtn{
+width:42px;height:42px;border-radius:12px;border:1px solid rgba(0,0,0,.06);
+background:linear-gradient(#fff,#f1f1f4);font-weight:800;cursor:pointer;
+}
 
-    order:5;
+.tab{
+  flex:1;
+  padding:10px;
+  border-radius:16px;
 
-    width:48px;
-    height:48px;
+  background:rgba(255,255,255,0.9);
+  backdrop-filter: blur(10px);
 
-    flex-shrink:0;
+  text-align:center;
+  font-weight:800;
+  cursor:pointer;
 
-    border-radius:18px;
+  transition:0.2s;
+}
 
-    border:none;
-
-    background:#fff;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    color:#111;
-
-    box-shadow:
-    0 8px 20px rgba(0,0,0,.12);
-
-    cursor:pointer;
-
+.tab.active{
+  background:#fff;
+  transform:scale(1.03);
 }
 
 .storyWrap{
@@ -996,6 +933,103 @@ button:active,
     outline: none;
     box-shadow: none;
 }
+
+.iosTopBar{
+
+height:88px;
+
+width:100%;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-around;
+
+
+border-radius:28px;
+
+
+background:rgba(245,245,245,.92);
+
+backdrop-filter:blur(18px);
+
+
+box-shadow:
+0 18px 45px rgba(0,0,0,.25),
+inset 0 1px 0 white;
+
+
+border:1px solid rgba(0,0,0,.08);
+
+margin-top:10px;
+
+}
+
+
+.iosTab,
+.iosLang{
+
+width:64px;
+height:64px;
+
+border:none;
+
+background:transparent;
+
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+
+border-radius:20px;
+
+position:relative;
+
+cursor:pointer;
+
+}
+
+
+.iosTab svg,
+.iosLang svg{
+
+width:34px;
+height:34px;
+
+stroke:#555;
+
+stroke-width:2;
+
+}
+
+
+.iosTab.active svg{
+
+stroke:#007aff;
+
+}
+
+
+.iosTab.active::after{
+
+content:"";
+
+position:absolute;
+
+bottom:5px;
+
+width:18px;
+height:3px;
+
+border-radius:10px;
+
+background:#007aff;
+
+}
 </style>
 </head>
 
@@ -1109,18 +1143,33 @@ fill="url(#starGrad)"/>
   <div class="joystick" onclick="openPS5()">🎮</div>
 </div>
 
-<div class="row">
-<button class="langBtn" id="langBtn">
-<svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-  <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.5"/>
-  <path d="M3 12H21" stroke="currentColor" stroke-width="2.5"/>
-  <path d="M12 3C15 6 16 9 16 12C16 15 15 18 12 21" stroke="currentColor" stroke-width="2.5"/>
-  <path d="M12 3C9 6 8 9 8 12C8 15 9 18 12 21" stroke="currentColor" stroke-width="2.5"/>
-</svg>
+<div class="iosTopBar">
+
+<button class="iosLang" id="langBtn">
+<i data-lucide="languages"></i>
 </button>
-<div class="tab active" data-tab="games"></div>
-<div class="tab" data-tab="bots"></div>
-<div class="tab" data-tab="services"></div>
+
+
+<button class="iosTab active" data-tab="games">
+<i data-lucide="gamepad-2"></i>
+</button>
+
+
+<button class="iosTab" data-tab="bots">
+<i data-lucide="bot"></i>
+</button>
+
+
+<button class="iosTab" data-tab="services">
+<i data-lucide="download"></i>
+</button>
+
+
+<button class="iosTab" data-tab="wallet">
+<i data-lucide="wallet"></i>
+</button>
+
+
 </div>
 
 <div class="storyWrap">
@@ -1288,10 +1337,9 @@ return `
 function applyLang(){
 document.getElementById("search").placeholder=t[lang].search;
 
-document.querySelectorAll(".tab")[0].innerText=t[lang].games;
-document.querySelectorAll(".tab")[1].innerText=t[lang].bots;
-document.querySelectorAll(".tab")[2].innerText=t[lang].services;
-
+document.querySelectorAll(".iosTab")[0].innerText="";
+document.querySelectorAll(".iosTab")[1].innerText="";
+document.querySelectorAll(".iosTab")[2].innerText="";
 document.getElementById("ps5Title").innerHTML =
 t[lang].ps5 + `
 
@@ -1379,7 +1427,7 @@ viewBox="0 0 40 40">
 
 </svg>
 `},
-{n:"Emergency",u:"https://t.me/Ava_Edge_bot?startapp=62168a6d50aaf651",i:"https://i.ibb.co/fYWJPPFh/JMCO-Healthcare-4.png",ribbonText:"TOP🔥",  ribbonColor:"gold"},
+{n:Stars",u:"http://t.me/starsov?start=r5436867060",i:"https://i.ibb.co/fYWJPPFh/JMCO-Healthcare-4.png",ribbonText:"TOP🔥",  ribbonColor:"gold"},
 {n:"toners",u:"https://t.me/Ava_Edge_bot?startapp=62168a6d50aaf651",i:"https://i.ibb.co/fYWJPPFh/JMCO-Healthcare-4.png",ribbonText:"TOP🔥",  ribbonColor:"gold",rightIcon: `
 <svg xmlns="http://www.w3.org/2000/svg"
 width="18"
@@ -1747,7 +1795,7 @@ lang = lang==="ru" ? "en" : "ru";
 applyLang();
 };
 
-document.querySelectorAll(".tab").forEach(tab=>{
+document.querySelectorAll(".iosTab").forEach(tab=>{
 tab.onclick = () => {
 
   document.querySelectorAll(".tab")
@@ -1807,6 +1855,8 @@ applyLang();
 render();
 initStories();
 renderFav();
+
+lucide.createIcons();
 
 startStories();
 
