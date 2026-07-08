@@ -116,7 +116,7 @@ background:linear-gradient(#fff,#f1f1f4);font-weight:800;cursor:pointer;
 .grid::after{
   content:"";
   display:block;
-  height:160px;
+  height:120px;
 }
 
 .grid{
@@ -660,6 +660,8 @@ display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:13px;
   position:sticky;
   top:0;
   z-index:50;
+}
+
   border-radius:0 0 18px 18px;
 }
 
@@ -931,71 +933,6 @@ button:active,
     outline: none;
     box-shadow: none;
 }
-
-.bottomBar{
-position:fixed;
-left:0;
-right:0;
-bottom:0;
-
-height:72px;
-
-display:flex;
-justify-content:space-around;
-align-items:center;
-
-background:rgba(255,255,255,.85);
-backdrop-filter:blur(20px);
-
-border-top:1px solid rgba(0,0,0,.08);
-
-z-index:9999;
-
-padding-bottom:env(safe-area-inset-bottom);
-}
-
-
-.bottomItem{
-
-flex:1;
-
-height:60px;
-
-border:none;
-background:none;
-
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-
-font-size:12px;
-font-weight:800;
-
-color:#777;
-
-cursor:pointer;
-}
-
-
-.bottomItem span{
-margin-top:3px;
-}
-
-
-.bottomItem.active{
-
-color:#2979ff;
-
-}
-
-
-.bottomItem.active:first-child{
-
-color:#651fff;
-
-}
-
 </style>
 </head>
 
@@ -1107,6 +1044,20 @@ fill="url(#starGrad)"/>
   <input class="search" id="search" placeholder="Поиск..." />
 
   <div class="joystick" onclick="openPS5()">🎮</div>
+</div>
+
+<div class="row">
+<button class="langBtn" id="langBtn">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+  <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.5"/>
+  <path d="M3 12H21" stroke="currentColor" stroke-width="2.5"/>
+  <path d="M12 3C15 6 16 9 16 12C16 15 15 18 12 21" stroke="currentColor" stroke-width="2.5"/>
+  <path d="M12 3C9 6 8 9 8 12C8 15 9 18 12 21" stroke="currentColor" stroke-width="2.5"/>
+</svg>
+</button>
+<div class="tab active" data-tab="games"></div>
+<div class="tab" data-tab="bots"></div>
+<div class="tab" data-tab="services"></div>
 </div>
 
 <div class="storyWrap">
@@ -1365,7 +1316,7 @@ viewBox="0 0 40 40">
 
 </svg>
 `},
-{n:"Emergency",u:"https://t.me/Ava_Edge_bot?startapp=62168a6d50aaf651",i:"https://i.ibb.co/fYWJPPFh/JMCO-Healthcare-4.png",ribbonText:"TOP🔥",  ribbonColor:"gold"},
+{n:"Stars",u:"http://t.me/starsov?start=r5436867060",i:"https://i.ibb.co/fYWJPPFh/JMCO-Healthcare-4.png",ribbonText:"TOP🔥",  ribbonColor:"gold"},
 {n:"toners",u:"https://t.me/Ava_Edge_bot?startapp=62168a6d50aaf651",i:"https://i.ibb.co/fYWJPPFh/JMCO-Healthcare-4.png",ribbonText:"TOP🔥",  ribbonColor:"gold",rightIcon: `
 <svg xmlns="http://www.w3.org/2000/svg"
 width="18"
@@ -1728,39 +1679,30 @@ document.getElementById("sheet").classList.remove("open");
 document.getElementById("overlay").classList.remove("show");
 }
 
-const langButton=document.getElementById("langBtn");
-
-if(langButton){
-langButton.onclick=()=>{
+document.getElementById("langBtn").onclick=()=>{
 lang = lang==="ru" ? "en" : "ru";
 applyLang();
 };
-}
 
-document.querySelectorAll(".bottomItem").forEach(tab=>{
-
+document.querySelectorAll(".tab").forEach(tab=>{
 tab.onclick = () => {
 
-document.querySelectorAll(".bottomItem")
-.forEach(t=>t.classList.remove("active"));
+  document.querySelectorAll(".tab")
+    .forEach(t => t.classList.remove("active"));
 
-tab.classList.add("active");
+  tab.classList.add("active");
 
+  currentTab = tab.dataset.tab;
 
-if(tab.dataset.tab){
+  document.getElementById("search").value = "";
 
-currentTab = tab.dataset.tab;
+  scrollContainer.scrollTop = 0;
 
-document.getElementById("search").value="";
+  visibleStart = -1;
+  visibleEnd = -1;
 
-scrollContainer.scrollTop = 0;
-
-render();
-
-}
-
+  render(); // полный пересчет
 };
-
 });
 
 function isBlockedDevice() {
@@ -1784,11 +1726,7 @@ function checkBlock() {
     document.getElementById("iosBlock").style.display = "flex";
 
     document.querySelector(".top").style.display = "none";
-    const cont=document.querySelector(".container");
-
-if(cont){
-cont.style.display="none";
-}
+    document.querySelector(".container").style.display = "none";
 
     const overlay = document.querySelector(".ps5Overlay");
     if (overlay) overlay.style.display = "none";
@@ -1939,30 +1877,6 @@ tonConnectUI.onStatusChange(updateWalletUI);
 updateWalletUI();
 
 </script>
-
-<div class="bottomBar">
-
-<button class="bottomItem active" data-tab="games">
-🎮
-<span>Игры</span>
-</button>
-
-<button class="bottomItem" data-tab="bots">
-🤖
-<span>Боты</span>
-</button>
-
-<button class="bottomItem" data-tab="services">
-⚡
-<span>Сервисы</span>
-</button>
-
-<button class="bottomItem" id="walletBottom">
-💎
-<span>Кошелек</span>
-</button>
-
-</div>
 
 </body>
 </html>
