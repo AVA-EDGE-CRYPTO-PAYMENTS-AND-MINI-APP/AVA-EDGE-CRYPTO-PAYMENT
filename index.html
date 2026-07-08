@@ -1046,20 +1046,6 @@ fill="url(#starGrad)"/>
   <div class="joystick" onclick="openPS5()">🎮</div>
 </div>
 
-<div class="row">
-<button class="langBtn" id="langBtn">
-<svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-  <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.5"/>
-  <path d="M3 12H21" stroke="currentColor" stroke-width="2.5"/>
-  <path d="M12 3C15 6 16 9 16 12C16 15 15 18 12 21" stroke="currentColor" stroke-width="2.5"/>
-  <path d="M12 3C9 6 8 9 8 12C8 15 9 18 12 21" stroke="currentColor" stroke-width="2.5"/>
-</svg>
-</button>
-<div class="tab active" data-tab="games"></div>
-<div class="tab" data-tab="bots"></div>
-<div class="tab" data-tab="services"></div>
-</div>
-
 <div class="storyWrap">
 <div class="storyTrack" id="storyTrack"></div>
 </div>
@@ -1747,6 +1733,33 @@ renderFav();
 
 startStories();
 
+lucide.createIcons();
+
+document.querySelectorAll(".nav-btn").forEach(btn=>{
+
+btn.onclick=()=>{
+
+if(btn.id==="walletBottom"){
+
+walletBtn.click();
+
+return;
+
+}
+
+document.querySelectorAll(".nav-btn")
+.forEach(b=>b.classList.remove("active"));
+
+btn.classList.add("active");
+
+currentTab=btn.dataset.tab;
+
+render();
+
+};
+
+});
+
 function updateStoryButtons(){
   document.querySelectorAll(".storyBtn").forEach(btn=>{
     btn.textContent = openText();
@@ -1877,6 +1890,32 @@ tonConnectUI.onStatusChange(updateWalletUI);
 updateWalletUI();
 
 </script>
+
+<link rel="stylesheet" href="https://unpkg.com/lucide@latest">
+
+<div class="bottom-nav">
+
+<button class="nav-btn active" data-tab="games">
+<i data-lucide="gamepad-2"></i>
+<span>Игры</span>
+</button>
+
+<button class="nav-btn" data-tab="bots">
+<i data-lucide="bot"></i>
+<span>Боты</span>
+</button>
+
+<button class="nav-btn" data-tab="services">
+<i data-lucide="grid-2x2"></i>
+<span>Сервисы</span>
+</button>
+
+<button class="nav-btn" id="walletBottom">
+<i data-lucide="wallet"></i>
+<span>Кошелек</span>
+</button>
+
+</div>
 
 </body>
 </html>
