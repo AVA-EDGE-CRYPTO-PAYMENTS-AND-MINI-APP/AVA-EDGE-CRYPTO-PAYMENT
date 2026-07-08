@@ -933,103 +933,6 @@ button:active,
     outline: none;
     box-shadow: none;
 }
-
-.iosTopBar{
-
-height:88px;
-
-width:100%;
-
-display:flex;
-
-align-items:center;
-
-justify-content:space-around;
-
-
-border-radius:28px;
-
-
-background:rgba(245,245,245,.92);
-
-backdrop-filter:blur(18px);
-
-
-box-shadow:
-0 18px 45px rgba(0,0,0,.25),
-inset 0 1px 0 white;
-
-
-border:1px solid rgba(0,0,0,.08);
-
-margin-top:10px;
-
-}
-
-
-.iosTab,
-.iosLang{
-
-width:64px;
-height:64px;
-
-border:none;
-
-background:transparent;
-
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-
-border-radius:20px;
-
-position:relative;
-
-cursor:pointer;
-
-}
-
-
-.iosTab svg,
-.iosLang svg{
-
-width:34px;
-height:34px;
-
-stroke:#555;
-
-stroke-width:2;
-
-}
-
-
-.iosTab.active svg{
-
-stroke:#007aff;
-
-}
-
-
-.iosTab.active::after{
-
-content:"";
-
-position:absolute;
-
-bottom:5px;
-
-width:18px;
-height:3px;
-
-border-radius:10px;
-
-background:#007aff;
-
-}
 </style>
 </head>
 
@@ -1143,33 +1046,18 @@ fill="url(#starGrad)"/>
   <div class="joystick" onclick="openPS5()">🎮</div>
 </div>
 
-<div class="iosTopBar">
-
-<button class="iosLang" id="langBtn">
-<i data-lucide="languages"></i>
+<div class="row">
+<button class="langBtn" id="langBtn">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+  <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.5"/>
+  <path d="M3 12H21" stroke="currentColor" stroke-width="2.5"/>
+  <path d="M12 3C15 6 16 9 16 12C16 15 15 18 12 21" stroke="currentColor" stroke-width="2.5"/>
+  <path d="M12 3C9 6 8 9 8 12C8 15 9 18 12 21" stroke="currentColor" stroke-width="2.5"/>
+</svg>
 </button>
-
-
-<button class="iosTab active" data-tab="games">
-<i data-lucide="gamepad-2"></i>
-</button>
-
-
-<button class="iosTab" data-tab="bots">
-<i data-lucide="bot"></i>
-</button>
-
-
-<button class="iosTab" data-tab="services">
-<i data-lucide="download"></i>
-</button>
-
-
-<button class="iosTab" data-tab="wallet">
-<i data-lucide="wallet"></i>
-</button>
-
-
+<div class="tab active" data-tab="games"></div>
+<div class="tab" data-tab="bots"></div>
+<div class="tab" data-tab="services"></div>
 </div>
 
 <div class="storyWrap">
@@ -1337,9 +1225,10 @@ return `
 function applyLang(){
 document.getElementById("search").placeholder=t[lang].search;
 
-document.querySelectorAll(".iosTab")[0].innerText="";
-document.querySelectorAll(".iosTab")[1].innerText="";
-document.querySelectorAll(".iosTab")[2].innerText="";
+document.querySelectorAll(".tab")[0].innerText=t[lang].games;
+document.querySelectorAll(".tab")[1].innerText=t[lang].bots;
+document.querySelectorAll(".tab")[2].innerText=t[lang].services;
+
 document.getElementById("ps5Title").innerHTML =
 t[lang].ps5 + `
 
@@ -1795,7 +1684,7 @@ lang = lang==="ru" ? "en" : "ru";
 applyLang();
 };
 
-document.querySelectorAll(".iosTab").forEach(tab=>{
+document.querySelectorAll(".tab").forEach(tab=>{
 tab.onclick = () => {
 
   document.querySelectorAll(".tab")
@@ -1855,8 +1744,6 @@ applyLang();
 render();
 initStories();
 renderFav();
-
-lucide.createIcons();
 
 startStories();
 
